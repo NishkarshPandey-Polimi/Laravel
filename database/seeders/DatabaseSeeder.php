@@ -16,9 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(UserSeeder::class);
-        $this->call([
-            \Database\Seeders\QuestionnaireSeeder::class,
-        ]);
+
 
         User::factory()->create([
             'name' => 'Test User',

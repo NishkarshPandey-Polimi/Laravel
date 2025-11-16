@@ -2,46 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Questionnaire extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'is_active',
-        'passing_score',
-    ];
-
+    protected $fillable = ['title', 'questionnaires', 'is_active', 'passing_score', 'description']; // 'members' can be stored as JSON
     protected $casts = [
-        'is_active' => 'boolean',
-        'passing_score' => 'integer',
+        'questionnaire' => 'array', // since you're using a repeater
     ];
 
-    protected $appends = [
-        'passingScore',
-    ];
 
-    public function questions()
+    public function Question()
     {
         return $this->hasMany(Question::class);
-    }
-
-    public function attempts()
-    {
-        return $this->hasMany(Attempt::class);
-    }
-
-    public function getPassingScoreAttribute(): int
-    {
-        return (int) $this->attributes['passing_score'];
-    }
-
-    public function setPassingScoreAttribute($value): void
-    {
-        $this->attributes['passing_score'] = (int) $value;
     }
 }

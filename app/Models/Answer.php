@@ -3,30 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Answer extends Model
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'attempt_id',
-        'question_id',
-        'selected_option_id',
-        'is_correct',
-    ];
+    protected $fillable = ['question_id', 'text', 'is_correct'];
 
     protected $casts = [
-        'selected_option_id' => 'array', // JSON -> array
-        'is_correct' => 'boolean',
+        'is_correct' => 'boolean', // since you're using a repeater
     ];
 
-    public function attempt()
-    {
-        return $this->belongsTo(Attempt::class);
-    }
-
-    public function question()
+    public function Question()
     {
         return $this->belongsTo(Question::class);
     }

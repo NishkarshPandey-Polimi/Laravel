@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('questionnaires', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->boolean('is_active')->default(false);
-            $table->unsignedTinyInteger('passing_score')->default(0);
+            $table->string('description');
+            $table->boolean('is_active');
+            $table->integer('passing_score');
             $table->timestamps();
         });
     }
