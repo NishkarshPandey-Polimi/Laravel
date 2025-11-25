@@ -19,6 +19,11 @@
                     href="/questionnaires/{{ $questionnaire->id }}"
                     class="text-indigo-400 hover:underline text-xl font-semibold">{{ $questionnaire->title }}</a>
                 <p class="mt-2 text-gray-300">{{ $questionnaire->description }}</p>
+                <div class="mt-2 text-sm text-gray-400">
+                    Passing Score: {{ $questionnaire->passing_score }}%
+                    &bull;
+                    Number of Questions: {{ $questionnaire->Question->count() }}
+                </div>
             </li>
             @endforeach
         </ul>

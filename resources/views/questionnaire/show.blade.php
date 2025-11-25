@@ -14,7 +14,7 @@
         <p class="mb-2">{{ $questionnaire->description }}</p>
 
         @if (session('status'))
-        <div class="bg-green-600 text-white px-4 py-2 rounded mb-4">
+        <div class="bg-{{ session('status') == 'Congrats you have passed' ? 'green' : 'red' }}-600 text-white px-4 py-2 rounded mb-4">
             {{ session('status') }}
         </div>
         @endif

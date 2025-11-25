@@ -22,12 +22,33 @@ class QuestionnaireController extends Controller
     // POST /questionnaires/{id}
     public function submit(Request $request, $id)
     {
-        // Get submitted responses
+        $questionnaire = Questionnaire::with(['Question.Answer'])->findOrFail($id);
         $responses = $request->input('responses', []);
+        $totalQuestions = $questionnaire->Question->count();
+        $correct = 0;
 
-        // You can extend: validate, store in database etc.
-        // For demonstration: just show a feedback message
-        return redirect()->back()->with('status', 'Submission received!')->with('responses', $responses);
+        foreach ($questionnaire->Question as $question) {
+            $answerId = $responses[$question->id] ?? null;
+            if ($answerId) {
+                // Find if selected answer is correct
+                $isCorrect = $question->Answer->where('id', $answerId)->pluck('is_correct')->first();
+                if ($isCorrect) {
+                    $correct++;
+                }
+            }
+        }
+
+        // Calculate percentage score
+        $scorePercent = $totalQuestions > 0 ? ($correct / $totalQuestions) * 100 : 0;
+
+        // Check pass/fail against required percentage (cast to float for safety)
+        $passingScore = (float) $questionnaire->passing_score;
+        $message = $scorePercent >= $passingScore
+            ? "Congrats you have passed"
+            : "Sorry you didn't score enough, try again.";
+
+        return redirect()->back()
+            ->with('status', $message);
     }
 
     public function index()
