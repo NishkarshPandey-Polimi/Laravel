@@ -9,3 +9,4 @@ Route::get('/', function () {
 
 Route::get('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'show']);
 Route::post('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'submit']); // handles the POST
+Route::get('/', [QuestionnaireController::class, 'index']);

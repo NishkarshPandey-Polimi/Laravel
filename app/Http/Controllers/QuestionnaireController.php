@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 
+
 class QuestionnaireController extends Controller
 {
     // GET /questionnaires/{id}
@@ -27,5 +28,13 @@ class QuestionnaireController extends Controller
         // You can extend: validate, store in database etc.
         // For demonstration: just show a feedback message
         return redirect()->back()->with('status', 'Submission received!')->with('responses', $responses);
+    }
+
+    public function index()
+    {
+        // Get all active questionnaires
+        $questionnaires = Questionnaire::where('is_active', true)->get();
+
+        return view('questionnaire.index', compact('questionnaires'));
     }
 }
