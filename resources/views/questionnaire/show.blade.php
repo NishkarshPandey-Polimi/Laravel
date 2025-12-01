@@ -19,8 +19,20 @@
         </div>
         @endif
 
-        <form method="POST" action="#">
+        <form method="POST" action="">
             @csrf
+
+            <div class="flex space-x-4 mb-4">
+                <div>
+                    <label>Name:</label>
+                    <input type="text" name="name" required class="rounded border px-2 text-black" value="{{ old('name') }}">
+                </div>
+                <div>
+                    <label>Surname:</label>
+                    <input type="text" name="surname" required class="rounded border px-2 text-black" value="{{ old('surname') }}">
+                </div>
+            </div>
+
             @foreach ($questionnaire->Question as $qIndex => $question)
             <div class="mb-6 p-4 bg-gray-900 rounded shadow">
                 <label class="block mb-2 font-semibold">
@@ -33,13 +45,15 @@
                             type="radio"
                             name="responses[{{ $question->id }}]"
                             value="{{ $answer->id }}"
-                            class="mr-2">
+                            class="mr-2"
+                            {{ old("responses.{$question->id}") == $answer->id ? 'checked' : '' }}>
                         {{ $answer->text }}
                     </label>
                     @endforeach
                 </div>
             </div>
             @endforeach
+
             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-800">Submit</button>
         </form>
     </div>
