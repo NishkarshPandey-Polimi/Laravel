@@ -19,4 +19,9 @@ class Questionnaire extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function Attempt()
+    {
+        return $this->hasMany(\App\Models\Attempt::class);
+    }
 }
