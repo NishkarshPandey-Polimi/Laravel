@@ -32,15 +32,19 @@ class AverageScoreOverTimeChart extends ChartWidget
                     'this_month' => 'This month',
                     'custom' => 'Custom (use dates below)',
                 ])
-                ->default('last_30'),
+                ->default('last_30')
+                ->reactive(),
 
             DatePicker::make('startDate')
-                ->label('Start date'),
+                ->label('Start date')
+                ->visible(fn($get) => $get('preset') === 'custom'),
 
             DatePicker::make('endDate')
-                ->label('End date'),
+                ->label('End date')
+                ->visible(fn($get) => $get('preset') === 'custom'),
         ]);
     }
+
 
     protected function getData(): array
     {
