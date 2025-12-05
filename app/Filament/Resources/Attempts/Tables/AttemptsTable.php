@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Attempts\Tables;
 
-use Filament\Tables\Table;
+use App\Filament\Resources\Attempts\AttemptResource;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class AttemptsTable
 {
@@ -38,6 +40,11 @@ class AttemptsTable
                     ->label('Date')
                     ->dateTime()
                     ->sortable(),
+            ])
+            // Clicking the row opens the View page:
+            ->recordUrl(fn($record) => AttemptResource::getUrl('view', ['record' => $record]))
+            ->recordActions([
+                ViewAction::make(),
             ]);
     }
 }

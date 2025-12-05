@@ -13,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use App\Filament\Resources\Attempts\Pages\ViewAttempt;
+
 
 class AttemptResource extends Resource
 {
@@ -20,7 +22,7 @@ class AttemptResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Attempt';
+    // protected static ?string $recordTitleAttribute = 'Attempt';
 
     public static function form(Schema $schema): Schema
     {
@@ -44,7 +46,7 @@ class AttemptResource extends Resource
         return [
             'index' => ListAttempts::route('/'),
             'create' => CreateAttempt::route('/create'),
-            'edit' => EditAttempt::route('/{record}/edit'),
+            'view' => ViewAttempt::route('/{record}'),
         ];
     }
 }

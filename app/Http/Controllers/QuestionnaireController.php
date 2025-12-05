@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Attempt;
 use Illuminate\Http\Request;
+use App\Models\AttemptAnswer;
 
 class QuestionnaireController extends Controller
 {
@@ -52,13 +53,26 @@ class QuestionnaireController extends Controller
             : "Sorry you didn't score enough, try again.";
 
         // Save the attempt
-        Attempt::create([
+        $attempt = Attempt::create([
             'questionnaire_id' => $questionnaire->id,
             'name' => $data['name'],
             'surname' => $data['surname'],
             'score' => $scorePercent,
             'result' => $result,
         ]);
+
+        foreach ($questionnaire->Question as $question) {
+            $answerId = $responses[$question->id] ?? null;
+
+            if ($answerId) {
+                AttemptAnswer::create([
+                    'attempt_id' => $attempt->id,
+                    'question_id' => $question->id,
+                    'answer_id' => $answerId,
+                ]);
+            }
+        }
+
 
         return redirect()->back()->with('status', $message);
     }
